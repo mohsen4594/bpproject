@@ -43,7 +43,7 @@ class User(AbstractBaseUser):
 
 class Problem(models.Model):
     name = models.CharField(max_length=30,default="problem1")
-    grade=models.IntegerField(blank=True, null=True)
+    #grade=models.IntegerField(blank=True, null=True)
     text = models.CharField(max_length=255)
 
     def __str__(self):
