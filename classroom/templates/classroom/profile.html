@@ -1,0 +1,14 @@
+{% extends 'base.html'%}
+{% block content  %}
+
+<h4>{{user.username}}</h4>
+
+
+
+  {%for problem in problemanswer %}
+
+<a href="{%url 'problem_detail' problem.id %}"><p>{{problem.name}}</p></a>
+
+  {% endfor%}
+
+{% endblock %}

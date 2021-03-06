@@ -1,0 +1,15 @@
+{% extends 'base.html'%}
+{% block content  %}
+  {% for problem in Problem1 %}
+
+<a href="{%url 'problem_detail' problem.id %}"><p>{{problem.name}}</p></a>
+
+  {% endfor%}
+
+{% for video in Videos1 %}
+
+<a href="{%url 'video_detail' video.id %}"><p>{{video.title}}</p></a>
+
+  {% endfor%}
+
+{% endblock %}

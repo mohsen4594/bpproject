@@ -1,0 +1,14 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="navbar-nav">
+        <a class="nav-item nav-link" href="{% url 'homepage' %}">Home</a>
+        {% if request.user.is_authenticated %}
+        <a class="nav-item nav-link" href="{% url 'login' %}">Logout</a>
+        <a class="nav-item nav-link" href="{% url 'addingvideo' %}">uploadvideo</a>
+        <a class="nav-item nav-link" href="{% url 'model_form_upload' %}">uploadsolution</a>
+       
+        {% else %}
+        <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+        <a class="nav-item nav-link" href="{% url 'user_register' %}">Register</a>
+        {% endif %}
+    </div>
+</nav>
