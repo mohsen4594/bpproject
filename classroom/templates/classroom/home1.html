@@ -4,17 +4,45 @@
   <ul>
   
     <li>
-      <a href="{% url 'model_form_upload' %}">Model Form Upload</a>
+      <a >teacher_dashboard</a>
     </li>
   </ul>
 
   <p>Uploaded files:</p>
   <ul>
     {% for obj in documents %}
-      <li>
-        <a href="{{ obj.document.url }}">{{ obj.document.name }}</a>
-        <small>(Uploaded at: {{ obj.uploaded_at }})</small>
-      </li>
+      
+        {% if obj.grade is None %}      
+        <a>{{ obj.student }}</a>
+         <small>(Hwname: {{ obj.problem }})</small>
+          <small>(Uploaded at: {{ obj.senttime }})</small>
+                  
+          <a href="{%url 'document_details' obj.id %}"><small>( {{ obj.document }})</small></a>
+
+
+        {% endif %}
+       <br />
     {% endfor %}
   </ul>
+  <ul>
+    {% for obj in documents %}
+      
+        {% if obj.grade is None%}   
+        {% else %}   
+        <a>{{ obj.student }}</a>
+         <small>(Hwname: {{ obj.problem }})</small>
+          <small>(yourgrade is : {{ obj.grade }})</small>
+        <small>(Uploaded at: {{ obj.senttime }})</small>
+        <a href="{%url 'document_details' obj.id  %}"><small>( {{ obj.document }})</small></a>
+
+         <br />
+        {% endif %}
+      
+      
+    {% endfor %}
+  </ul>
+
+
+
+
 {% endblock %}

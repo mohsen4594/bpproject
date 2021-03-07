@@ -1,7 +1,8 @@
 from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
 from .managers import MyUserManager
-
+import datetime
+from django.utils import timezone
 
 
 class User(AbstractBaseUser):
@@ -44,7 +45,8 @@ class User(AbstractBaseUser):
 class Problem(models.Model):
     name = models.CharField(max_length=30,default="problem1")
     #grade=models.IntegerField(blank=True, null=True)
-    text = models.CharField(max_length=255)
+    text = models.TextField()
+    deadline= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
@@ -61,13 +63,14 @@ class Student(models.Model):
 
 class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+
     #id_num=models.IntegerField()
     def __str__(self):
         return self.user.username
 class ProblemAnswer(models.Model):
     student=models.ForeignKey(Student,on_delete=models.CASCADE,blank=True, null=True)
     senttime=models.DateTimeField(auto_now_add=True)
-    document = models.FileField(upload_to='documents/',blank=True)
+    document = models.FileField(upload_to='documents/')
     problem=models.ForeignKey(Problem,on_delete=models.CASCADE,blank=True, null=True)
     grade=models.IntegerField(blank=True, null=True)
     def __str__(self):

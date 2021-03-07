@@ -1,20 +1,20 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from .models import Problem,User,Videos
-from .forms import UserLoginForm,UserRegistrationForm,VideoCreation
+from .forms import UserLoginForm,UserRegistrationForm,VideoCreation,ProblemCreation
 from django.contrib.auth import authenticate,login,logout
-from django.contrib import messages
+#from django.contrib import messages
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.decorators import login_required
-
+from django.utils import timezone
 from .models import ProblemAnswer
 from .forms import DocumentForm
-
+#name=""
 
 
 @login_required(login_url='/login')
 def home(request):
-    documents = ProblemAnswer.objects.all()
+    documents = ProblemAnswer.objects.all
     return render(request, 'classroom/home1.html', { 'documents': documents })
 
 
@@ -52,8 +52,9 @@ def login_request(request):
         form = UserLoginForm(request.POST)
         if form.is_valid():
             cd=form.cleaned_data
+            
             user=authenticate(request,email=cd['email'],password=cd['password'])
-
+            #name=cd['email']
 
             if user is not None:
                 login(request, user)
@@ -93,12 +94,24 @@ def logout_request(request):
 
 def problem_detail(request,id):
     problem=Problem.objects.get(id=id)
+    #print(name)
     return render (request,"classroom/problem.html",{'problem':problem})
+    #print(requst.user)
 
 def video_detail(request,video_id):
     video=Videos.objects.get(id=video_id)
-    print("hello")
+    #print(requst.User)
     return render (request,"classroom/video_detail.html",{'video':video})
+
+
+def document_details(request,id):
+    doc=ProblemAnswer.objects.get(id=id)
+   
+    return render (request,"classroom/document_details.html",{'doc':doc})
+
+
+
+
 
 @login_required(login_url='/login')
 def upload_video(request):
@@ -106,10 +119,10 @@ def upload_video(request):
     if request.method == 'POST':
        
         form = VideoCreation(request.POST, request.FILES)
-        print("hello")
+        #print("hello")
         if form.is_valid():
             form.save()
-            print("hello")
+            #print("hello")
             return redirect('homepage')
     else:
         form = VideoCreation()
@@ -121,8 +134,26 @@ def model_form_upload(request):
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
+
+       # ProblemAnswer.senttime = timezone.now
             form.save()
-        return redirect('homepage')
+            return redirect('homepage')
     else:
         form = DocumentForm()
     return render(request, 'classroom/model_form_upload.html', {'form': form})
+
+
+@login_required(login_url='/login')
+def upload_problem(request):
+
+    if request.method == 'POST':
+       
+        form = ProblemCreation(request.POST, request.FILES)
+        #print("hello")
+        if form.is_valid():
+            form.save()
+            #print("hello")
+            return redirect('homepage')
+    else:
+        form = ProblemCreation()
+    return render(request, 'classroom/teacher_problem_upload.html', {'form': form })

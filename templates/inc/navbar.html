@@ -5,7 +5,8 @@
         <a class="nav-item nav-link" href="{% url 'login' %}">Logout</a>
         <a class="nav-item nav-link" href="{% url 'addingvideo' %}">uploadvideo</a>
         <a class="nav-item nav-link" href="{% url 'model_form_upload' %}">uploadsolution</a>
-       
+         <a class="nav-item nav-link" href="{% url 'home' %}">teacher_dashboard</a>
+        <a class="nav-item nav-link" href="{% url 'teacher_problem_upload' %}">teacher_problem_upload</a>
         {% else %}
         <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
         <a class="nav-item nav-link" href="{% url 'user_register' %}">Register</a>

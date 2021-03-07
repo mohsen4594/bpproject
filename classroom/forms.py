@@ -1,10 +1,9 @@
 from django import forms
 from django.contrib import admin
 from .models import User
-
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
-from .models import ProblemAnswer,Videos
+from .models import ProblemAnswer,Videos,Problem
 
 
 class  VideoCreation (forms.ModelForm):
@@ -13,13 +12,18 @@ class  VideoCreation (forms.ModelForm):
         
         fields = '__all__'
 
-
+class  ProblemCreation (forms.ModelForm):
+    class Meta:
+        model = Problem
+        
+        fields = ('name', 'text',)
 
 class DocumentForm(forms.ModelForm):
     class Meta:
+
         model = ProblemAnswer
         
-        fields = '__all__'
+        fields= ('student', 'document','problem',)
 
         
 

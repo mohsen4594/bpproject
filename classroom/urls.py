@@ -15,8 +15,11 @@ urlpatterns = [
     path("register/", views.user_register, name="user_register"),
     path("logout/", views.logout_request, name="logout"),
     path("login/", views.login_request, name="login"),
-    path('teacher_video_uploadvideo/',views.upload_video,name='teacher_video_upload'),
+    path('teacher_video_upload/',views.upload_video,name='teacher_video_upload'),
     path('video/<int:video_id>', views.video_detail, name="video_detail"),
+    path('document<int:id>/', views.document_details, name="document_details"),
+    path('teacher_problem_upload/',views.upload_problem,name='teacher_problem_upload'),
+    
 ]
 urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
