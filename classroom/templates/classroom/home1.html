@@ -2,7 +2,7 @@
 
 {% block content %}
   <ul>
-  
+
     <li>
       <a >teacher_dashboard</a>
     </li>
@@ -11,34 +11,45 @@
   <p>Uploaded files:</p>
   <ul>
     {% for obj in documents %}
-      
-        {% if obj.grade is None %}      
+
+        {% if obj.grade is None %}
         <a>{{ obj.student }}</a>
-         <small>(Hwname: {{ obj.problem }})</small>
-          <small>(Uploaded at: {{ obj.senttime }})</small>
-                  
+         <small>( {{ obj.problem }})</small>
+          <small>( {{ obj.senttime }})</small>
+
+
           <a href="{%url 'document_details' obj.id %}"><small>( {{ obj.document }})</small></a>
+
+            <a href="{% url 'insert_grade' obj.id %}"> <p style="color:red;"> <strong>insert grade </strong></p></a>
 
 
         {% endif %}
        <br />
     {% endfor %}
   </ul>
+
+
+
+ <br />
+  <br />
+   <br />
+    <br />
+      <p>graded HW</p>
   <ul>
     {% for obj in documents %}
-      
-        {% if obj.grade is None%}   
-        {% else %}   
+
+        {% if obj.grade is None%}
+        {% else %}
         <a>{{ obj.student }}</a>
-         <small>(Hwname: {{ obj.problem }})</small>
+         <small>( {{ obj.problem }})</small>
           <small>(yourgrade is : {{ obj.grade }})</small>
-        <small>(Uploaded at: {{ obj.senttime }})</small>
+        <small>( {{ obj.senttime }})</small>
         <a href="{%url 'document_details' obj.id  %}"><small>( {{ obj.document }})</small></a>
 
          <br />
         {% endif %}
-      
-      
+
+
     {% endfor %}
   </ul>
 

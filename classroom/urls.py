@@ -19,7 +19,8 @@ urlpatterns = [
     path('video/<int:video_id>', views.video_detail, name="video_detail"),
     path('document<int:id>/', views.document_details, name="document_details"),
     path('teacher_problem_upload/',views.upload_problem,name='teacher_problem_upload'),
-    
+    path('isert_grade/<int:id>',views.insert_grade,name='insert_grade'),
+
 ]
 urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

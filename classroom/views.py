@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from .models import Problem,User,Videos
-from .forms import UserLoginForm,UserRegistrationForm,VideoCreation,ProblemCreation
+from .forms import UserLoginForm,UserRegistrationForm,VideoCreation,ProblemCreation,InsertGradeForm
 from django.contrib.auth import authenticate,login,logout
 #from django.contrib import messages
 from django.conf import settings
@@ -29,7 +29,7 @@ def addingvideo(request):
                   context = {})
 
 
-    
+
 
 
 
@@ -37,7 +37,7 @@ def addingvideo(request):
 def homepage(request):
     Problem1=Problem.objects.all
     Videos1=Videos.objects.all
-    
+
 
     return render(request = request,
                   template_name='classroom/home.html',
@@ -52,13 +52,13 @@ def login_request(request):
         form = UserLoginForm(request.POST)
         if form.is_valid():
             cd=form.cleaned_data
-            
+
             user=authenticate(request,email=cd['email'],password=cd['password'])
             #name=cd['email']
 
             if user is not None:
                 login(request, user)
-                
+
                 return redirect ('homepage')
 
     else:
@@ -106,7 +106,7 @@ def video_detail(request,video_id):
 
 def document_details(request,id):
     doc=ProblemAnswer.objects.get(id=id)
-   
+
     return render (request,"classroom/document_details.html",{'doc':doc})
 
 
@@ -117,7 +117,7 @@ def document_details(request,id):
 def upload_video(request):
 
     if request.method == 'POST':
-       
+
         form = VideoCreation(request.POST, request.FILES)
         #print("hello")
         if form.is_valid():
@@ -129,7 +129,7 @@ def upload_video(request):
     return render(request, 'classroom/teacher_video_upload.html', {'form': form })
 
 
-@login_required(login_url='/login')   
+@login_required(login_url='/login')
 def model_form_upload(request):
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
@@ -147,13 +147,29 @@ def model_form_upload(request):
 def upload_problem(request):
 
     if request.method == 'POST':
-       
+
         form = ProblemCreation(request.POST, request.FILES)
         #print("hello")
         if form.is_valid():
+
             form.save()
             #print("hello")
             return redirect('homepage')
     else:
         form = ProblemCreation()
     return render(request, 'classroom/teacher_problem_upload.html', {'form': form })
+@login_required(login_url='/login')
+def insert_grade (request,id):
+    problem_instance = get_object_or_404(ProblemAnswer, id=id)
+    if request.method == 'POST':
+        form = InsertGradeForm(request.POST, request.FILES)
+        if form.is_valid():
+            problem_instance.grade = form.cleaned_data['grade']
+            problem_instance.save()
+
+
+            #form.save()
+            return redirect('home')
+    else:
+        form = InsertGradeForm()
+    return render(request, 'classroom/insert_grade.html', {'form': form})

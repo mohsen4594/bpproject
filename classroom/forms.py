@@ -5,27 +5,34 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 from .models import ProblemAnswer,Videos,Problem
 
+class InsertGradeForm(forms.ModelForm):
+    class Meta:
+
+        model = ProblemAnswer
+
+        fields= ('grade',)
+
 
 class  VideoCreation (forms.ModelForm):
     class Meta:
         model = Videos
-        
+
         fields = '__all__'
 
 class  ProblemCreation (forms.ModelForm):
     class Meta:
         model = Problem
-        
+
         fields = ('name', 'text',)
 
 class DocumentForm(forms.ModelForm):
     class Meta:
 
         model = ProblemAnswer
-        
+
         fields= ('student', 'document','problem',)
 
-        
+
 
 
 class UserCreationForm(forms.ModelForm):
